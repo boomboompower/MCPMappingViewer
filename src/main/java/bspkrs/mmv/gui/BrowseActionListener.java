@@ -28,8 +28,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-public class BrowseActionListener implements ActionListener
-{
+public class BrowseActionListener implements ActionListener {
 
     private JComboBox<String> comboBox;
     private boolean           isOpen;
@@ -37,9 +36,7 @@ public class BrowseActionListener implements ActionListener
     private JFileChooser      jfc;
     private Reference<File>   defaultDir;
 
-    public BrowseActionListener(JComboBox<String> inputField, boolean isOpen, Component parent, boolean dirOnly, Reference<File> defaultDir)
-    {
-
+    public BrowseActionListener(JComboBox<String> inputField, boolean isOpen, Component parent, boolean dirOnly, Reference<File> defaultDir) {
         this.defaultDir = defaultDir;
         this.comboBox = inputField;
         this.isOpen = isOpen;
@@ -49,8 +46,7 @@ public class BrowseActionListener implements ActionListener
         jfc.setFileSelectionMode(dirOnly ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY);
 
         if (!dirOnly)
-            jfc.addChoosableFileFilter(new FileFilter()
-            {
+            jfc.addChoosableFileFilter(new FileFilter() {
                 @Override
                 public String getDescription()
                 {
@@ -67,8 +63,7 @@ public class BrowseActionListener implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent arg0)
-    {
+    public void actionPerformed(ActionEvent arg0) {
         int rv;
         jfc.setCurrentDirectory(defaultDir.val);
         if (isOpen)
@@ -76,18 +71,15 @@ public class BrowseActionListener implements ActionListener
         else
             rv = jfc.showSaveDialog(parent);
 
-        if (rv == JFileChooser.APPROVE_OPTION)
-        {
+        if (rv == JFileChooser.APPROVE_OPTION) {
             File f = jfc.getSelectedFile();
 
             String path;
-            try
-            {
+            try {
                 path = f.getCanonicalPath();
 
             }
-            catch (IOException e)
-            {
+            catch (IOException e) {
                 path = f.getAbsolutePath();
             }
 

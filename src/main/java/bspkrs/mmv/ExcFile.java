@@ -23,13 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ExcFile
-{
+public class ExcFile {
+    
     public final Map<String, ExcData> srgMethodName2ExcData;
     public final Map<String, ExcData> srgParamName2ExcData;
 
-    public ExcFile(File f) throws IOException
-    {
+    public ExcFile(File f) throws IOException {
         srgMethodName2ExcData = new HashMap<String, ExcData>();
         srgParamName2ExcData = new HashMap<String, ExcData>();
         // example lines:
@@ -40,12 +39,9 @@ public class ExcFile
         // net/minecraft/server/MinecraftServer.func_145747_a(Lnet/minecraft/util/IChatComponent;)V=|p_145747_1_
 
         Scanner in = new Scanner(new FileReader(f));
-        try
-        {
-            while (in.hasNextLine())
-            {
-                if (in.hasNext("#"))
-                {
+        try {
+            while (in.hasNextLine()) {
+                if (in.hasNext("#")) {
                     in.nextLine();
                     continue;
                 }
@@ -73,8 +69,7 @@ public class ExcFile
 
                 ExcData existing = srgMethodName2ExcData.get(srgName);
 
-                if ((existing == null) || (existing.getParameters().length < toAdd.getParameters().length))
-                {
+                if ((existing == null) || (existing.getParameters().length < toAdd.getParameters().length)) {
                     srgMethodName2ExcData.put(srgName, toAdd);
 
                     for (String parameter : toAdd.getParameters())
@@ -82,8 +77,7 @@ public class ExcFile
                 }
             }
         }
-        finally
-        {
+        finally {
             in.close();
         }
     }

@@ -27,8 +27,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class SrgFile
-{
+public class SrgFile {
+    
     // All maps should be inter-connected to reference a single set of objects
     public final Map<String, ClassSrgData>             srgClassName2ClassData   = new TreeMap<String, ClassSrgData>();            // full/pkg/ClassSrgName -> ClassSrgData
     public final Map<String, Set<ClassSrgData>>        srgPkg2ClassDataSet      = new TreeMap<String, Set<ClassSrgData>>();       // full/pkg -> Set<ClassSrgData>
@@ -39,21 +39,16 @@ public class SrgFile
     public final Map<String, ClassSrgData>             srgMethodName2ClassData  = new TreeMap<String, ClassSrgData>();            // func_12345_a -> ClassSrgData
     public final Map<String, ClassSrgData>             srgFieldName2ClassData   = new TreeMap<String, ClassSrgData>();            // field_12345_a -> ClassSrgData
 
-    public static String getLastComponent(String s)
-    {
+    public static String getLastComponent(String s) {
         String[] parts = s.split("/");
         return parts[parts.length - 1];
     }
 
-    public SrgFile(File f, ExcFile excFile, StaticMethodsFile staticMethods) throws IOException
-    {
+    public SrgFile(File f, ExcFile excFile, StaticMethodsFile staticMethods) throws IOException {
         Scanner in = new Scanner(new BufferedReader(new FileReader(f)));
-        try
-        {
-            while (in.hasNextLine())
-            {
-                if (in.hasNext("CL:"))
-                {
+        try {
+            while (in.hasNextLine()) {
+                if (in.hasNext("CL:")) {
                     // CL: a net/minecraft/util/EnumChatFormatting
                     in.next(); // skip CL:
                     String obf = in.next();
@@ -74,9 +69,7 @@ public class SrgFile
 
                     if (!class2FieldDataSet.containsKey(classData))
                         class2FieldDataSet.put(classData, new TreeSet<FieldSrgData>());
-                }
-                else if (in.hasNext("FD:"))
-                {
+                } else if (in.hasNext("FD:")) {
                     // FD: aql/c net/minecraft/block/BlockStoneBrick/field_94408_c #C
                     in.next(); // skip FD:
                     String[] obf = in.next().split("/");
@@ -93,9 +86,7 @@ public class SrgFile
                     srgFieldName2FieldData.put(srgName, fieldData);
                     class2FieldDataSet.get(srgClassName2ClassData.get(srgPkg + "/" + srgOwner)).add(fieldData);
                     srgFieldName2ClassData.put(srgName, srgClassName2ClassData.get(srgPkg + "/" + srgOwner));
-                }
-                else if (in.hasNext("MD:"))
-                {
+                } else if (in.hasNext("MD:")) {
                     // MD: aor/a (Lmt;)V net/minecraft/block/BlockHay/func_94332_a (Lnet/minecraft/client/renderer/texture/IconRegister;)V #C
                     in.next(); // skip MD:
                     String[] obf = in.next().split("/");
@@ -119,19 +110,15 @@ public class SrgFile
                     ExcData toAdd = new ExcData(srgOwner, srgName, srgDescriptor, new String[0], staticMethods.contains(srgName));
                     ExcData existing = excFile.srgMethodName2ExcData.get(srgName);
 
-                    if ((existing == null) || (existing.getParameters().length < toAdd.getParameters().length))
-                    {
+                    if ((existing == null) || (existing.getParameters().length < toAdd.getParameters().length)) {
                         excFile.srgMethodName2ExcData.put(srgName, toAdd);
                         for (String parameter : toAdd.getParameters())
                             excFile.srgParamName2ExcData.put(parameter, toAdd);
                     }
-                }
-                else
+                } else
                     in.nextLine();
             }
-        }
-        finally
-        {
+        } finally {
             in.close();
         }
     }

@@ -15,10 +15,8 @@
  */
 package bspkrs.mmv;
 
-public class ClassSrgData implements Comparable<ClassSrgData>
-{
-    public static enum SortType
-    {
+public class ClassSrgData implements Comparable<ClassSrgData> {
+    public static enum SortType {
         PKG,
         OBF
     }
@@ -30,48 +28,40 @@ public class ClassSrgData implements Comparable<ClassSrgData>
 
     public static SortType sortType = SortType.PKG;
 
-    public ClassSrgData(String obfName, String srgName, String srgPkgName, boolean isClientOnly)
-    {
+    public ClassSrgData(String obfName, String srgName, String srgPkgName, boolean isClientOnly) {
         this.obfName = obfName;
         this.srgName = srgName;
         this.srgPkgName = srgPkgName;
         this.isClientOnly = isClientOnly;
     }
 
-    public String getObfName()
-    {
+    public String getObfName() {
         return this.obfName;
     }
 
-    public String getSrgName()
-    {
+    public String getSrgName() {
         return this.srgName;
     }
 
-    public String getSrgPkgName()
-    {
+    public String getSrgPkgName() {
         return this.srgPkgName;
     }
 
-    public ClassSrgData setSrgPkgName(String pkg)
-    {
+    public ClassSrgData setSrgPkgName(String pkg) {
         this.srgPkgName = pkg;
         return this;
     }
 
-    public boolean isClientOnly()
-    {
+    public boolean isClientOnly() {
         return isClientOnly;
     }
 
-    public String getFullyQualifiedSrgName()
-    {
+    public String getFullyQualifiedSrgName() {
         return srgPkgName + "/" + srgName;
     }
 
     @Override
-    public int compareTo(ClassSrgData o)
-    {
+    public int compareTo(ClassSrgData o) {
         if (sortType == SortType.PKG)
             if (o != null)
                 return getFullyQualifiedSrgName().compareTo(o.getFullyQualifiedSrgName());
@@ -87,8 +77,7 @@ public class ClassSrgData implements Comparable<ClassSrgData>
 
     }
 
-    public boolean contains(String s)
-    {
+    public boolean contains(String s) {
         return srgName.contains(s) || obfName.contains(s) || this.srgPkgName.contains(s);
     }
 }

@@ -86,8 +86,8 @@ import bspkrs.mmv.VersionFetcher;
 import bspkrs.mmv.version.AppVersionChecker;
 import immibis.bon.IProgressListener;
 
-public class MappingGui extends JFrame
-{
+public class MappingGui extends JFrame {
+    
     public static final String                  VERSION_NUMBER        = "1.0.1";
     private static final long                   serialVersionUID      = 1L;
     private final Preferences                   prefs                 = Preferences.userNodeForPackage(MappingGui.class);
@@ -124,8 +124,7 @@ public class MappingGui extends JFrame
     private final String                        mcfTopic              = "http://www.minecraftforum.net/topic/2115030-";
 
     // @formatter:off
-    public static DefaultTableModel classesDefaultModel = new DefaultTableModel(new Object[][] { {}, }, new String[] { "Pkg name", "SRG name", "Obf name" })
-    {
+    public static DefaultTableModel classesDefaultModel = new DefaultTableModel(new Object[][] { {}, }, new String[] { "Pkg name", "SRG name", "Obf name" }) {
         private static final long serialVersionUID = 1L;
         boolean[]                 columnEditables  = new boolean[] { false, false, false };
         @SuppressWarnings("rawtypes")
@@ -139,8 +138,7 @@ public class MappingGui extends JFrame
         public boolean isCellEditable(int row, int column) { return columnEditables[column]; }
     };
 
-    public static DefaultTableModel methodsDefaultModel = new DefaultTableModel( new Object[][] { {}, }, new String[] { "MCP Name", "SRG Name", "Obf Name", "SRG Descriptor", "Comment" })
-    {
+    public static DefaultTableModel methodsDefaultModel = new DefaultTableModel( new Object[][] { {}, }, new String[] { "MCP Name", "SRG Name", "Obf Name", "SRG Descriptor", "Comment" }) {
         private static final long serialVersionUID = 1L;
         boolean[]                 columnEditables  = new boolean[] { false, false, false, false, false };
         @SuppressWarnings("rawtypes")
@@ -154,8 +152,7 @@ public class MappingGui extends JFrame
         public boolean isCellEditable(int row, int column) { return columnEditables[column]; }
     };
 
-    public static DefaultTableModel paramsDefaultModel = new DefaultTableModel( new Object[][] { {}, }, new String[] { "MCP Name", "SRG Name", "Type" })
-    {
+    public static DefaultTableModel paramsDefaultModel = new DefaultTableModel( new Object[][] { {}, }, new String[] { "MCP Name", "SRG Name", "Type" }) {
         private static final long serialVersionUID = 1L;
         boolean[]                 columnEditables  = new boolean[] { false, false, false };
         @SuppressWarnings("rawtypes")
@@ -169,8 +166,7 @@ public class MappingGui extends JFrame
         public boolean isCellEditable(int row, int column) { return columnEditables[column]; }
     };
 
-    public static DefaultTableModel fieldsDefaultModel = new DefaultTableModel( new Object[][] { {}, }, new String[] { "MCP Name", "SRG Name", "Obf Name", "Comment" } )
-    {
+    public static DefaultTableModel fieldsDefaultModel = new DefaultTableModel( new Object[][] { {}, }, new String[] { "MCP Name", "SRG Name", "Obf Name", "Comment" } ) {
         private static final long serialVersionUID = 1L;
         boolean[]                 columnEditables  = new boolean[] { false, false, false, false };
         @SuppressWarnings("rawtypes")
@@ -187,13 +183,11 @@ public class MappingGui extends JFrame
     private JButton btnGetVersions;
     // @formatter:on
 
-    private void savePrefs()
-    {
+    private void savePrefs() {
         for (int i = 0; i < Math.min(cmbFilter.getItemCount(), 20); i++)
             prefs.put(PREFS_KEY_FILTER + i, cmbFilter.getItemAt(i));
 
-        if (tblClasses.getRowSorter().getSortKeys().size() > 0)
-        {
+        if (tblClasses.getRowSorter().getSortKeys().size() > 0) {
             int i = tblClasses.getRowSorter().getSortKeys().get(0).getColumn() + 1;
             SortOrder order = tblClasses.getRowSorter().getSortKeys().get(0).getSortOrder();
             prefs.putInt(PREFS_KEY_CLASS_SORT, order == SortOrder.DESCENDING ? i * -1 : i);
@@ -201,8 +195,7 @@ public class MappingGui extends JFrame
         else
             prefs.putInt(PREFS_KEY_CLASS_SORT, 1);
 
-        if (tblMethods.getRowSorter().getSortKeys().size() > 0)
-        {
+        if (tblMethods.getRowSorter().getSortKeys().size() > 0) {
             int i = tblMethods.getRowSorter().getSortKeys().get(0).getColumn() + 1;
             SortOrder order = tblMethods.getRowSorter().getSortKeys().get(0).getSortOrder();
             prefs.putInt(PREFS_KEY_METHOD_SORT, order == SortOrder.DESCENDING ? i * -1 : i);
@@ -210,8 +203,7 @@ public class MappingGui extends JFrame
         else
             prefs.putInt(PREFS_KEY_METHOD_SORT, 1);
 
-        if (tblParams.getRowSorter().getSortKeys().size() > 0)
-        {
+        if (tblParams.getRowSorter().getSortKeys().size() > 0) {
             int i = tblParams.getRowSorter().getSortKeys().get(0).getColumn() + 1;
             SortOrder order = tblParams.getRowSorter().getSortKeys().get(0).getSortOrder();
             prefs.putInt(PREFS_KEY_PARAM_SORT, order == SortOrder.DESCENDING ? i * -1 : i);
@@ -219,8 +211,7 @@ public class MappingGui extends JFrame
         else
             prefs.putInt(PREFS_KEY_PARAM_SORT, 1);
 
-        if (tblFields.getRowSorter().getSortKeys().size() > 0)
-        {
+        if (tblFields.getRowSorter().getSortKeys().size() > 0) {
             int i = tblFields.getRowSorter().getSortKeys().get(0).getColumn() + 1;
             SortOrder order = tblFields.getRowSorter().getSortKeys().get(0).getSortOrder();
             prefs.putInt(PREFS_KEY_FIELD_SORT, order == SortOrder.DESCENDING ? i * -1 : i);
@@ -229,16 +220,12 @@ public class MappingGui extends JFrame
             prefs.putInt(PREFS_KEY_FIELD_SORT, 1);
     }
 
-    private void loadPrefs(boolean sortOnly)
-    {
-        if (!sortOnly)
-        {
+    private void loadPrefs(boolean sortOnly) {
+        if (!sortOnly) {
             DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) cmbFilter.getModel();
-            for (int i = 0; i < 20; i++)
-            {
+            for (int i = 0; i < 20; i++) {
                 String item = prefs.get(PREFS_KEY_FILTER + i, " ");
-                if (!item.equals(" "))
-                {
+                if (!item.equals(" ")) {
                     if (model.getIndexOf(item) == -1)
                         cmbFilter.addItem(item);
                 }
@@ -246,8 +233,7 @@ public class MappingGui extends JFrame
 
             cmbFilter.setSelectedIndex(-1);
 
-            if (cmbMappingVersion.getItemCount() > 0)
-            {
+            if (cmbMappingVersion.getItemCount() > 0) {
                 btnRefreshTables.setEnabled(true);
                 cmbMappingVersion.setSelectedIndex(0);
             }
@@ -277,15 +263,13 @@ public class MappingGui extends JFrame
         tblFields.getRowSorter().setSortKeys(fieldSort);
     }
 
-    private void checkForUpdates()
-    {
+    private void checkForUpdates() {
         versionChecker = new AppVersionChecker("MCP Mapping Viewer", VERSION_NUMBER, versionURL, mcfTopic,
                 new String[] { "{appName} {oldVer} is out of date! Visit {updateURL} to download the latest release ({newVer})." },
                 new String[] {
                         "{appName} {oldVer} is out of date! <br/><br/>Download the latest release ({newVer}) from <a href=\"{updateURL}\">{updateURL}</a>." },
                 5000);
-        if (!versionChecker.isCurrentVersion())
-        {
+        if (!versionChecker.isCurrentVersion()) {
             showHTMLDialog(MappingGui.this, versionChecker.getDialogMessage()[0], "An update is available", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -293,52 +277,41 @@ public class MappingGui extends JFrame
     /**
      * Launch the application.
      */
-    public static void main(String[] args)
-    {
-        try
-        {
+    public static void main(String[] args) {
+        try {
             // Set System L&F
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        catch (Throwable e)
-        {}
-        EventQueue.invokeLater(new Runnable()
-        {
+        catch (Throwable e) {}
+        EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     MappingGui window = new MappingGui();
                     window.frmMcpMappingViewer.setVisible(true);
                 }
-                catch (Exception e)
-                {
+                catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
 
-    private static String getPrintableStackTrace(Throwable e, Set<StackTraceElement> stopAt)
-    {
+    private static String getPrintableStackTrace(Throwable e, Set<StackTraceElement> stopAt) {
         String s = e.toString();
         int numPrinted = 0;
-        for (StackTraceElement ste : e.getStackTrace())
-        {
+        for (StackTraceElement ste : e.getStackTrace()) {
             boolean stopHere = false;
             if (stopAt.contains(ste) && numPrinted > 0)
                 stopHere = true;
-            else
-            {
+            else {
                 s += "\n    at " + ste.toString();
                 numPrinted++;
                 if (ste.getClassName().startsWith("javax.swing."))
                     stopHere = true;
             }
 
-            if (stopHere)
-            {
+            if (stopHere) {
                 int numHidden = e.getStackTrace().length - numPrinted;
                 s += "\n    ... " + numHidden + " more";
                 break;
@@ -347,13 +320,11 @@ public class MappingGui extends JFrame
         return s;
     }
 
-    private static String getStackTraceMessage(String prefix, Throwable e)
-    {
+    private static String getStackTraceMessage(String prefix, Throwable e) {
         String s = prefix;
 
         s += "\n" + getPrintableStackTrace(e, Collections.<StackTraceElement> emptySet());
-        while (e.getCause() != null)
-        {
+        while (e.getCause() != null) {
             Set<StackTraceElement> stopAt = new HashSet<StackTraceElement>(Arrays.asList(e.getStackTrace()));
             e = e.getCause();
             s += "\nCaused by: " + getPrintableStackTrace(e, stopAt);
@@ -364,29 +335,24 @@ public class MappingGui extends JFrame
     /**
      * Create the application.
      */
-    public MappingGui()
-    {
+    public MappingGui() {
         initialize();
         checkForUpdates();
     }
 
-    public void setCsvFileEdited(boolean bol)
-    {
+    public void setCsvFileEdited(boolean bol) {
         btnGetBotCommands.setEnabled(bol);
     }
 
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize()
-    {
+    private void initialize() {
         frmMcpMappingViewer = new JFrame();
         frmMcpMappingViewer.setIconImage(new ImageIcon(MappingGui.class.getResource("/bspkrs/mmv/gui/icon/bspkrs32.png")).getImage());
-        frmMcpMappingViewer.addWindowListener(new WindowAdapter()
-        {
+        frmMcpMappingViewer.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent arg0)
-            {
+            public void windowClosing(WindowEvent arg0) {
                 savePrefs();
             }
         });
@@ -460,11 +426,9 @@ public class MappingGui extends JFrame
         tblParams.setModel(paramsDefaultModel);
         scrlpnParams.setViewportView(tblParams);
 
-        SwingUtilities.invokeLater(new Runnable()
-        {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 splitMethods.setDividerLocation(0.8);
             }
         });
@@ -501,21 +465,16 @@ public class MappingGui extends JFrame
         pnlControls.add(cmbMappingVersion);
 
         btnGetVersions = new JButton("Get Versions");
-        btnGetVersions.addActionListener(new ActionListener()
-        {
+        btnGetVersions.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                try
-                {
+            public void actionPerformed(ActionEvent e) {
+                try {
                     cmbMappingVersion.removeAllItems();
-                    for (String s : versionFetcher.getVersions(chkForceRefresh.isSelected()))
-                    {
+                    for (String s : versionFetcher.getVersions(chkForceRefresh.isSelected())) {
                         cmbMappingVersion.addItem(s);
                     }
                 }
-                catch (IOException exc)
-                {}
+                catch (IOException exc) {}
             }
         });
         pnlControls.add(btnGetVersions);
@@ -562,19 +521,15 @@ public class MappingGui extends JFrame
         pnlFilter.add(btnSearch);
         cmbFilter.setEnabled(false);
         cmbFilter.addActionListener(new FilterComboTextEdited());
-        cmbFilter.getEditor().getEditorComponent().addFocusListener(new FocusAdapter()
-        {
+        cmbFilter.getEditor().getEditorComponent().addFocusListener(new FocusAdapter() {
             @Override
-            public void focusGained(FocusEvent e)
-            {
+            public void focusGained(FocusEvent e) {
                 cmbFilter.getEditor().selectAll();
             }
         });
-        cmbFilter.getEditor().getEditorComponent().addKeyListener(new KeyAdapter()
-        {
+        cmbFilter.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e)
-            {
+            public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     btnSearch.doClick();
             }
@@ -582,11 +537,9 @@ public class MappingGui extends JFrame
         btnSearch.setEnabled(false);
 
         JLabel lblSearchInfo = new JLabel("A note on search");
-        lblSearchInfo.addMouseListener(new MouseAdapter()
-        {
+        lblSearchInfo.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
+            public void mouseClicked(MouseEvent e) {
                 String message = "Search is global and returns a set of classes that contain a match for the input. \n" +
                         "Search is case sensitive!\n\nData elements searched on:\n" +
                         "Classes:\n    ~ Pkg Name\n    ~ SRG Name\n    ~ Obf Name\n" +
@@ -617,14 +570,11 @@ public class MappingGui extends JFrame
         btnGetBotCommands = new JButton("Get Command List");
         btnGetBotCommands.setToolTipText("Exports to the system clipboard a listing of MCPBot commands for any edits you have made in the GUI.");
         btnGetBotCommands.setEnabled(false);
-        btnGetBotCommands.addActionListener(new ActionListener()
-        {
+        btnGetBotCommands.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 String commands = currentLoader.getBotCommands(chkClearOnCopy.isSelected());
-                if (commands != null && !commands.isEmpty())
-                {
+                if (commands != null && !commands.isEmpty()) {
                     Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(commands), null);
                     JOptionPane.showMessageDialog(MappingGui.this, "Commands copied to clipboard: \n" + commands, "MMV - MCPBot Commands",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -644,11 +594,9 @@ public class MappingGui extends JFrame
         chkClearOnCopy.setToolTipText("Whether or not to clear the MCPBot command list when the button is clicked.");
         pnlFilter.add(chkClearOnCopy);
 
-        lblAbout.addMouseListener(new MouseAdapter()
-        {
+        lblAbout.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
+            public void mouseClicked(MouseEvent e) {
                 MappingGui.class.getClassLoader();
                 String imgsrc = MappingGui.class.getResource("/bspkrs/mmv/gui/icon/bspkrs.png").toString();
                 String year = new SimpleDateFormat("yyyy").format(new Date());
@@ -670,21 +618,17 @@ public class MappingGui extends JFrame
             }
         });
 
-        addWindowListener(new WindowAdapter()
-        {
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e)
-            {
+            public void windowClosing(WindowEvent e) {
                 savePrefs();
             }
         });
 
-        try
-        {
+        try {
             loadPrefs(false);
         }
-        catch (Throwable e)
-        {
+        catch (Throwable e) {
             String s = getStackTraceMessage(
                     "An error has occurred - give bspkrs this stack trace (which has been copied to the clipboard) if the error continues to occur on launch.\n",
                     e);
@@ -692,11 +636,9 @@ public class MappingGui extends JFrame
             System.err.println(s);
 
             final String errMsg = s;
-            SwingUtilities.invokeLater(new Runnable()
-            {
+            SwingUtilities.invokeLater(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     progressBar.setString(" ");
                     progressBar.setValue(0);
 
@@ -707,13 +649,10 @@ public class MappingGui extends JFrame
         }
     }
 
-    class MappingVersionsComboItemChanged implements ItemListener
-    {
+    class MappingVersionsComboItemChanged implements ItemListener {
         @Override
-        public void itemStateChanged(ItemEvent e)
-        {
-            if (e.getStateChange() == ItemEvent.SELECTED)
-            {
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
                 @SuppressWarnings("unchecked")
                 JComboBox<String> cmb = (JComboBox<String>) e.getSource();
                 btnRefreshTables.setEnabled(cmb.getItemCount() > 0);
@@ -721,13 +660,10 @@ public class MappingGui extends JFrame
         }
     }
 
-    class FilterComboTextEdited implements ActionListener
-    {
+    class FilterComboTextEdited implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if (e.getActionCommand().equals("comboBoxEdited"))
-            {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getActionCommand().equals("comboBoxEdited")) {
                 String filterText = cmbFilter.getSelectedItem().toString();
 
                 if (filterText == null || filterText.trim().isEmpty())
@@ -744,23 +680,18 @@ public class MappingGui extends JFrame
         }
     }
 
-    class ClassTableSelectionListener implements ListSelectionListener
-    {
+    class ClassTableSelectionListener implements ListSelectionListener {
         private final JTable table;
 
-        public ClassTableSelectionListener(JTable table)
-        {
+        public ClassTableSelectionListener(JTable table) {
             this.table = table;
         }
 
         @Override
-        public void valueChanged(ListSelectionEvent e)
-        {
-            if (!e.getValueIsAdjusting() && !table.getModel().equals(classesDefaultModel))
-            {
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting() && !table.getModel().equals(classesDefaultModel)) {
                 int i = table.getSelectedRow();
-                if (i > -1)
-                {
+                if (i > -1) {
                     savePrefs();
                     String pkg = (String) table.getModel().getValueAt(table.convertRowIndexToModel(i), 0);
                     String name = (String) table.getModel().getValueAt(table.convertRowIndexToModel(i), 1);
@@ -774,8 +705,7 @@ public class MappingGui extends JFrame
                     new TableColumnAdjuster(tblFields).adjustColumns();
                     loadPrefs(true);
                 }
-                else
-                {
+                else {
                     tblMethods.setModel(methodsDefaultModel);
                     tblMethods.setEnabled(false);
                     tblFields.setModel(fieldsDefaultModel);
@@ -787,23 +717,18 @@ public class MappingGui extends JFrame
         }
     }
 
-    class MethodTableSelectionListener implements ListSelectionListener
-    {
+    class MethodTableSelectionListener implements ListSelectionListener {
         private final JTable table;
 
-        public MethodTableSelectionListener(JTable table)
-        {
+        public MethodTableSelectionListener(JTable table) {
             this.table = table;
         }
 
         @Override
-        public void valueChanged(ListSelectionEvent e)
-        {
-            if (!e.getValueIsAdjusting() && !table.getModel().equals(methodsDefaultModel))
-            {
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting() && !table.getModel().equals(methodsDefaultModel)) {
                 int i = table.getSelectedRow();
-                if (i > -1)
-                {
+                if (i > -1) {
                     savePrefs();
                     String name = (String) table.getModel().getValueAt(table.convertRowIndexToModel(i), 1);
                     tblParams.setModel(currentLoader.getParamModel(name));
@@ -811,8 +736,7 @@ public class MappingGui extends JFrame
                     new TableColumnAdjuster(tblParams).adjustColumns();
                     loadPrefs(true);
                 }
-                else
-                {
+                else {
                     tblParams.setModel(paramsDefaultModel);
                     tblParams.setEnabled(false);
                 }
@@ -820,18 +744,15 @@ public class MappingGui extends JFrame
         }
     }
 
-    class SearchActionListener implements ActionListener
-    {
+    class SearchActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             if (curTask != null && curTask.isAlive() || cmbFilter.getItemCount() == 0)
                 return;
 
             String filterText = cmbFilter.getSelectedItem().toString();
 
-            if (filterText != null && !filterText.trim().isEmpty())
-            {
+            if (filterText != null && !filterText.trim().isEmpty()) {
                 DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) cmbFilter.getModel();
 
                 if (model.getIndexOf(filterText) != -1)
@@ -857,28 +778,21 @@ public class MappingGui extends JFrame
 
             loadPrefs(true);
 
-            curTask = new Thread()
-            {
+            curTask = new Thread() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     boolean crashed = false;
 
-                    try
-                    {
-                        IProgressListener progress = new IProgressListener()
-                        {
+                    try {
+                        IProgressListener progress = new IProgressListener() {
                             private String currentText;
 
                             @Override
-                            public void start(final int max, final String text)
-                            {
+                            public void start(final int max, final String text) {
                                 currentText = text.equals("") ? " " : text;
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setString(currentText);
                                         if (max >= 0)
                                             progressBar.setMaximum(max);
@@ -888,27 +802,21 @@ public class MappingGui extends JFrame
                             }
 
                             @Override
-                            public void set(final int value)
-                            {
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                            public void set(final int value) {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setValue(value);
                                     }
                                 });
                             }
 
                             @Override
-                            public void set(final int value, final String text)
-                            {
+                            public void set(final int value, final String text) {
                                 currentText = text.equals("") ? " " : text;
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setValue(value);
                                         progressBar.setString(currentText);
                                     }
@@ -916,13 +824,10 @@ public class MappingGui extends JFrame
                             }
 
                             @Override
-                            public void setMax(final int max)
-                            {
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                            public void setMax(final int max) {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setMaximum(max);
                                     }
                                 });
@@ -935,8 +840,7 @@ public class MappingGui extends JFrame
                         new TableColumnAdjuster(tblClasses).adjustColumns();
                         loadPrefs(true);
 
-                        if (tblClasses.getRowCount() > 0)
-                        {
+                        if (tblClasses.getRowCount() > 0) {
                             String pkg = (String) tblClasses.getModel().getValueAt(0, 0);
                             String name = (String) tblClasses.getModel().getValueAt(0, 1);
                             tblMethods.setModel(currentLoader.getMethodModel(pkg + "/" + name));
@@ -949,22 +853,17 @@ public class MappingGui extends JFrame
                             new TableColumnAdjuster(tblFields).adjustColumns();
                             loadPrefs(true);
 
-                            if (cmbFilter.getSelectedItem().toString().trim().startsWith("field") && tblFields.getRowCount() > 0)
-                            {
-                                for (int i = 0; i < tblFields.getRowCount(); i++)
-                                {
-                                    if (((String) tblFields.getModel().getValueAt(i, 1)).contains(cmbFilter.getSelectedItem().toString()))
-                                    {
+                            if (cmbFilter.getSelectedItem().toString().trim().startsWith("field") && tblFields.getRowCount() > 0) {
+                                for (int i = 0; i < tblFields.getRowCount(); i++) {
+                                    if (((String) tblFields.getModel().getValueAt(i, 1)).contains(cmbFilter.getSelectedItem().toString())) {
                                         final int rowIndex = i;
                                         tblFields.setRowSelectionInterval(rowIndex, rowIndex);
                                         tblFields.setColumnSelectionInterval(1, 1);
                                         tblFields.requestFocus();
 
-                                        SwingUtilities.invokeLater(new Runnable()
-                                        {
+                                        SwingUtilities.invokeLater(new Runnable() {
                                             @Override
-                                            public void run()
-                                            {
+                                            public void run() {
                                                 tblFields.scrollRectToVisible(tblFields.getCellRect(rowIndex, 0, true));
                                             }
                                         });
@@ -973,22 +872,17 @@ public class MappingGui extends JFrame
                                     }
                                 }
                             }
-                            else if (cmbFilter.getSelectedItem().toString().trim().startsWith("func") && tblMethods.getRowCount() > 0)
-                            {
-                                for (int i = 0; i < tblMethods.getRowCount(); i++)
-                                {
-                                    if (((String) tblMethods.getModel().getValueAt(i, 1)).contains(cmbFilter.getSelectedItem().toString()))
-                                    {
+                            else if (cmbFilter.getSelectedItem().toString().trim().startsWith("func") && tblMethods.getRowCount() > 0) {
+                                for (int i = 0; i < tblMethods.getRowCount(); i++) {
+                                    if (((String) tblMethods.getModel().getValueAt(i, 1)).contains(cmbFilter.getSelectedItem().toString())) {
                                         final int rowIndex = i;
                                         tblMethods.setRowSelectionInterval(rowIndex, rowIndex);
                                         tblMethods.setColumnSelectionInterval(1, 1);
                                         tblMethods.requestFocus();
 
-                                        SwingUtilities.invokeLater(new Runnable()
-                                        {
+                                        SwingUtilities.invokeLater(new Runnable() {
                                             @Override
-                                            public void run()
-                                            {
+                                            public void run() {
                                                 tblMethods.scrollRectToVisible(tblMethods.getCellRect(rowIndex, 0, true));
                                             }
                                         });
@@ -1002,8 +896,7 @@ public class MappingGui extends JFrame
 
                         loadPrefs(true);
                     }
-                    catch (Exception e)
-                    {
+                    catch (Exception e) {
                         String s = getStackTraceMessage(
                                 "An error has occurred - give bspkrs this stack trace (which has been copied to the clipboard)\n", e);
 
@@ -1012,11 +905,9 @@ public class MappingGui extends JFrame
                         crashed = true;
 
                         final String errMsg = s;
-                        SwingUtilities.invokeLater(new Runnable()
-                        {
+                        SwingUtilities.invokeLater(new Runnable() {
                             @Override
-                            public void run()
-                            {
+                            public void run() {
                                 progressBar.setString(" ");
                                 progressBar.setValue(0);
 
@@ -1025,15 +916,11 @@ public class MappingGui extends JFrame
                             }
                         });
                     }
-                    finally
-                    {
-                        if (!crashed)
-                        {
-                            SwingUtilities.invokeLater(new Runnable()
-                            {
+                    finally {
+                        if (!crashed) {
+                            SwingUtilities.invokeLater(new Runnable() {
                                 @Override
-                                public void run()
-                                {
+                                public void run() {
                                     progressBar.setString(" ");
                                     progressBar.setValue(0);
                                     cmbFilter.setEnabled(true);
@@ -1051,11 +938,9 @@ public class MappingGui extends JFrame
         }
     }
 
-    class RefreshActionListener implements ActionListener
-    {
+    class RefreshActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             if (curTask != null && curTask.isAlive())
                 return;
 
@@ -1075,28 +960,21 @@ public class MappingGui extends JFrame
 
             loadPrefs(true);
 
-            curTask = new Thread()
-            {
+            curTask = new Thread() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     boolean crashed = false;
 
-                    try
-                    {
-                        IProgressListener progress = new IProgressListener()
-                        {
+                    try {
+                        IProgressListener progress = new IProgressListener() {
                             private String currentText;
 
                             @Override
-                            public void start(final int max, final String text)
-                            {
+                            public void start(final int max, final String text) {
                                 currentText = text.equals("") ? " " : text;
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setString(currentText);
                                         if (max >= 0)
                                             progressBar.setMaximum(max);
@@ -1106,27 +984,21 @@ public class MappingGui extends JFrame
                             }
 
                             @Override
-                            public void set(final int value)
-                            {
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                            public void set(final int value) {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setValue(value);
                                     }
                                 });
                             }
 
                             @Override
-                            public void set(final int value, final String text)
-                            {
+                            public void set(final int value, final String text) {
                                 currentText = text.equals("") ? " " : text;
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setValue(value);
                                         progressBar.setString(currentText);
                                     }
@@ -1134,21 +1006,17 @@ public class MappingGui extends JFrame
                             }
 
                             @Override
-                            public void setMax(final int max)
-                            {
-                                SwingUtilities.invokeLater(new Runnable()
-                                {
+                            public void setMax(final int max) {
+                                SwingUtilities.invokeLater(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
+                                    public void run() {
                                         progressBar.setMaximum(max);
                                     }
                                 });
                             }
                         };
 
-                        if (!mcpInstances.containsKey(mappingVersion) || chkForceRefresh.isSelected())
-                        {
+                        if (!mcpInstances.containsKey(mappingVersion) || chkForceRefresh.isSelected()) {
                             progress.start(0, "Reading MCP configuration");
                             currentLoader = new McpMappingLoader(MappingGui.this, mappingVersion, progress);
                             mcpInstances.put(mappingVersion, currentLoader);
@@ -1162,8 +1030,7 @@ public class MappingGui extends JFrame
                         new TableColumnAdjuster(tblClasses).adjustColumns();
                         loadPrefs(true);
                     }
-                    catch (CantLoadMCPMappingException e)
-                    {
+                    catch (CantLoadMCPMappingException e) {
                         String s = getStackTraceMessage("", e);
 
                         System.err.println(s);
@@ -1171,11 +1038,9 @@ public class MappingGui extends JFrame
                         crashed = true;
 
                         final String errMsg = s;
-                        SwingUtilities.invokeLater(new Runnable()
-                        {
+                        SwingUtilities.invokeLater(new Runnable() {
                             @Override
-                            public void run()
-                            {
+                            public void run() {
                                 progressBar.setString(" ");
                                 progressBar.setValue(0);
 
@@ -1183,8 +1048,7 @@ public class MappingGui extends JFrame
                             }
                         });
                     }
-                    catch (Exception e)
-                    {
+                    catch (Exception e) {
                         String s = getStackTraceMessage(
                                 "An error has occurred - give bspkrs this stack trace (which has been copied to the clipboard)\n", e);
 
@@ -1193,11 +1057,9 @@ public class MappingGui extends JFrame
                         crashed = true;
 
                         final String errMsg = s;
-                        SwingUtilities.invokeLater(new Runnable()
-                        {
+                        SwingUtilities.invokeLater(new Runnable() {
                             @Override
-                            public void run()
-                            {
+                            public void run() {
                                 progressBar.setString(" ");
                                 progressBar.setValue(0);
 
@@ -1206,15 +1068,11 @@ public class MappingGui extends JFrame
                             }
                         });
                     }
-                    finally
-                    {
-                        if (!crashed)
-                        {
-                            SwingUtilities.invokeLater(new Runnable()
-                            {
+                    finally {
+                        if (!crashed) {
+                            SwingUtilities.invokeLater(new Runnable() {
                                 @Override
-                                public void run()
-                                {
+                                public void run() {
                                     progressBar.setString(" ");
                                     progressBar.setValue(0);
                                     cmbFilter.setEnabled(true);
@@ -1235,8 +1093,7 @@ public class MappingGui extends JFrame
         }
     }
 
-    public static void showHTMLDialog(Component parentComponent, Object message, String title, int messageType)
-    {
+    public static void showHTMLDialog(Component parentComponent, Object message, String title, int messageType) {
         JLabel label = new JLabel();
         Font font = label.getFont();
 
@@ -1246,19 +1103,14 @@ public class MappingGui extends JFrame
 
         JEditorPane ep = new JEditorPane("text/html", "<html><body style=\"" + style + "\">" + message.toString() + "</body></html>");
 
-        ep.addHyperlinkListener(new HyperlinkListener()
-        {
+        ep.addHyperlinkListener(new HyperlinkListener() {
             @Override
-            public void hyperlinkUpdate(HyperlinkEvent e)
-            {
-                if (e.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED))
-                {
-                    try
-                    {
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if (e.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
+                    try {
                         Desktop.getDesktop().browse(e.getURL().toURI());
                     }
-                    catch (Throwable ignore)
-                    {}
+                    catch (Throwable ignore) {}
                 }
             }
         });

@@ -19,18 +19,16 @@ import java.util.Comparator;
 
 import bspkrs.mmv.version.NaturalOrderComparator;
 
-public class SplittedNaturalComparator implements Comparator<Object>
-{
+public class SplittedNaturalComparator implements Comparator<Object> {
+
     private final String splitter;
 
-    public SplittedNaturalComparator(String splitter)
-    {
+    public SplittedNaturalComparator(String splitter) {
         this.splitter = splitter;
     }
 
     @Override
-    public int compare(Object o1, Object o2)
-    {
+    public int compare(Object o1, Object o2) {
         String[] a = o1.toString().split(splitter);
         String[] b = o2.toString().split(splitter);
 

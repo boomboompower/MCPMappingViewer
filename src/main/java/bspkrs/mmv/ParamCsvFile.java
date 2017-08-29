@@ -28,48 +28,40 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class ParamCsvFile
-{
+public class ParamCsvFile {
+    
     private final File                      file;
     private final Map<String, ParamCsvData> srgParamName2ParamCsvData;
     private boolean                         isDirty;
     private String                          headerLine;
 
-    public ParamCsvFile(File file) throws IOException
-    {
+    public ParamCsvFile(File file) throws IOException {
         this.file = file;
-        srgParamName2ParamCsvData = new TreeMap<String, ParamCsvData>();
+        srgParamName2ParamCsvData = new TreeMap<>();
         readFromFile();
         isDirty = false;
     }
 
-    public void readFromFile() throws IOException
-    {
+    public void readFromFile() throws IOException {
         Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
-        try
-        {
+        try {
             in.useDelimiter(",");
             headerLine = in.nextLine(); // Skip header row
-            while (in.hasNextLine())
-            {
+            while (in.hasNextLine()) {
                 String srgName = in.next();
                 String mcpName = in.next();
                 String side = in.nextLine().substring(1);
                 srgParamName2ParamCsvData.put(srgName, new ParamCsvData(srgName, mcpName, Integer.valueOf(side)));
             }
         }
-        finally
-        {
+        finally {
             in.close();
         }
     }
 
-    public void writeToFile() throws IOException
-    {
-        if (isDirty)
-        {
-            if (file.exists())
-            {
+    public void writeToFile() throws IOException {
+        if (isDirty) {
+            if (file.exists()) {
                 File fileBak = new File(file.getAbsolutePath() + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".bak");
                 file.renameTo(fileBak);
             }
@@ -88,29 +80,24 @@ public class ParamCsvFile
         }
     }
 
-    public boolean hasCsvDataForKey(String srgName)
-    {
+    public boolean hasCsvDataForKey(String srgName) {
         return srgParamName2ParamCsvData.containsKey(srgName);
     }
 
-    public ParamCsvData getCsvDataForKey(String srgName)
-    {
+    public ParamCsvData getCsvDataForKey(String srgName) {
         return srgParamName2ParamCsvData.get(srgName);
     }
 
-    public void updateCsvDataForKey(String srgName, ParamCsvData csvData)
-    {
+    public void updateCsvDataForKey(String srgName, ParamCsvData csvData) {
         srgParamName2ParamCsvData.put(srgName, csvData);
         isDirty = true;
     }
 
-    public boolean isDirty()
-    {
+    public boolean isDirty() {
         return isDirty;
     }
 
-    public void setIsDirty(boolean bol)
-    {
+    public void setIsDirty(boolean bol) {
         isDirty = bol;
     }
 }

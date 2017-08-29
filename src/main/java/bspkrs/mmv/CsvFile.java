@@ -28,49 +28,40 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class CsvFile
-{
+public class CsvFile {
+
     private final File                 file;
     private final Map<String, CsvData> srgMemberName2CsvData;
     private boolean                    isDirty;
     private String                     headerLine;
 
-    public CsvFile(File file) throws IOException
-    {
+    public CsvFile(File file) throws IOException {
         this.file = file;
-        srgMemberName2CsvData = new TreeMap<String, CsvData>();
+        srgMemberName2CsvData = new TreeMap<>();
         readFromFile();
         isDirty = false;
     }
 
-    public void readFromFile() throws IOException
-    {
+    public void readFromFile() throws IOException {
         Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
-        try
-        {
+        try {
             in.useDelimiter(",");
             headerLine = in.nextLine(); // Skip header row
-            while (in.hasNextLine())
-            {
+            while (in.hasNextLine()) {
                 String srgName = in.next();
                 String mcpName = in.next();
                 String side = in.next();
                 String comment = in.nextLine().substring(1);
                 srgMemberName2CsvData.put(srgName, new CsvData(srgName, mcpName, Integer.valueOf(side), comment));
             }
-        }
-        finally
-        {
+        } finally {
             in.close();
         }
     }
 
-    public void writeToFile() throws IOException
-    {
-        if (isDirty)
-        {
-            if (file.exists())
-            {
+    public void writeToFile() throws IOException {
+        if (isDirty) {
+            if (file.exists()) {
                 File fileBak = new File(file.getAbsolutePath() + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".bak");
                 file.renameTo(fileBak);
             }
@@ -89,29 +80,24 @@ public class CsvFile
         }
     }
 
-    public boolean hasCsvDataForKey(String srgName)
-    {
+    public boolean hasCsvDataForKey(String srgName) {
         return srgMemberName2CsvData.containsKey(srgName);
     }
 
-    public CsvData getCsvDataForKey(String srgName)
-    {
+    public CsvData getCsvDataForKey(String srgName) {
         return srgMemberName2CsvData.get(srgName);
     }
 
-    public void updateCsvDataForKey(String srgName, CsvData csvData)
-    {
+    public void updateCsvDataForKey(String srgName, CsvData csvData) {
         srgMemberName2CsvData.put(srgName, csvData);
         isDirty = true;
     }
 
-    public boolean isDirty()
-    {
+    public boolean isDirty() {
         return isDirty;
     }
 
-    public void setIsDirty(boolean bol)
-    {
+    public void setIsDirty(boolean bol) {
         isDirty = bol;
     }
 }

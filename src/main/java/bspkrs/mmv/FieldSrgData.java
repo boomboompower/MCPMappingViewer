@@ -15,16 +15,14 @@
  */
 package bspkrs.mmv;
 
-public class FieldSrgData extends MemberSrgData implements Comparable<FieldSrgData>
-{
-    public FieldSrgData(String obfOwner, String obfName, String srgOwner, String srgPkg, String srgName, boolean isClientOnly)
-    {
+public class FieldSrgData extends MemberSrgData implements Comparable<FieldSrgData> {
+
+    public FieldSrgData(String obfOwner, String obfName, String srgOwner, String srgPkg, String srgName, boolean isClientOnly) {
         super(obfOwner, obfName, srgOwner, srgPkg, srgName, isClientOnly);
     }
 
     @Override
-    public int compareTo(FieldSrgData o)
-    {
+    public int compareTo(FieldSrgData o) {
         if (o != null)
             return this.getSrgName().compareTo(o.getSrgName());
         else

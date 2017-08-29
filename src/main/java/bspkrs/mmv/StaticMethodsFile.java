@@ -23,36 +23,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class StaticMethodsFile
-{
+public class StaticMethodsFile {
+
     private final File  file;
     public List<String> staticMethods;
 
-    public StaticMethodsFile(File file) throws IOException
-    {
+    public StaticMethodsFile(File file) throws IOException {
         this.file = file;
-        staticMethods = new ArrayList<String>();
+        staticMethods = new ArrayList<>();
         readFromFile();
     }
 
-    public void readFromFile() throws IOException
-    {
+    public void readFromFile() throws IOException {
         Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
-        try
-        {
-            while (in.hasNextLine())
-            {
+        try {
+            while (in.hasNextLine()) {
                 staticMethods.add(in.nextLine());
             }
         }
-        finally
-        {
+        finally {
             in.close();
         }
     }
 
-    public boolean contains(String srgName)
-    {
+    public boolean contains(String srgName) {
         return staticMethods.contains(srgName);
     }
 }

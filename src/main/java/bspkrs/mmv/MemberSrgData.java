@@ -15,8 +15,8 @@
  */
 package bspkrs.mmv;
 
-public class MemberSrgData
-{
+public class MemberSrgData {
+    
     private final String  obfOwner;
     private final String  obfName;
     private final String  srgOwner;
@@ -24,8 +24,7 @@ public class MemberSrgData
     private final String  srgName;
     private final boolean isClientOnly;
 
-    public MemberSrgData(String obfOwner, String obfName, String srgOwner, String srgPkg, String srgName, boolean isClientOnly)
-    {
+    public MemberSrgData(String obfOwner, String obfName, String srgOwner, String srgPkg, String srgName, boolean isClientOnly) {
         this.obfOwner = obfOwner;
         this.obfName = obfName;
         this.srgOwner = srgOwner;
@@ -34,38 +33,31 @@ public class MemberSrgData
         this.isClientOnly = isClientOnly;
     }
 
-    public String getObfOwner()
-    {
+    public String getObfOwner() {
         return obfOwner;
     }
 
-    public String getObfName()
-    {
+    public String getObfName() {
         return obfName;
     }
 
-    public String getSrgOwner()
-    {
+    public String getSrgOwner() {
         return srgOwner;
     }
 
-    public String getSrgName()
-    {
+    public String getSrgName() {
         return srgName;
     }
 
-    public boolean isClientOnly()
-    {
+    public boolean isClientOnly() {
         return isClientOnly;
     }
 
-    public String getSrgPkg()
-    {
+    public String getSrgPkg() {
         return srgPkg;
     }
 
-    public boolean contains(String s)
-    {
+    public boolean contains(String s) {
         return srgName.contains(s) || obfName.contains(s);
     }
 }
